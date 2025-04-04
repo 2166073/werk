@@ -1,0 +1,379 @@
+/* Navbar */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .navbar{
+    width: 70%;
+    margin: auto;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+
+a{
+    text-decoration: none;
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+
+}.logo{
+    width: 100px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+
+}
+.navbar ul li a{
+text-decoration: none;
+color: black;
+text-transform: uppercase;
+}
+.navbar ul li::after{
+    content:'';
+    height: 3px;
+    width: 0;
+    background:#009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover:after{
+    width: 100%;
+}
+
+  
+ 
+/* Hero Sectie */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.hero-slideshow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.btn-primary {
+    background:rgba(164, 234, 255, 0.7);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background 0.3s, transform 0.3s;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #1e40af;
+    transform: scale(1.1);
+}
+
+
+.text-box{
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.text-box h1{
+    font-size: 62px;
+}
+.text-box p{
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #fff;
+}
+.hero-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.hero-btn:hover{
+    background:rgba(164, 234, 255, 0.7);
+    background:rgba(164, 234, 255, 0.7);
+    transition: 1s;
+
+}
+
+nav .fa{
+    display: none;
+}
+
+/* mobile view */
+
+@media(max-width: 700px){
+    .text-box h1{
+        font-size: 20px;   
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    .nav-links{
+        position: absolute;
+        background:rgba(164, 234, 255, 0.7);
+        height:100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+
+    }
+    nav .fa{
+        display: block;
+        color: #fff;
+        margin: 10px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+    padding: 30px;
+    }
+}
+ /* end */
+
+
+ /* course */
+
+ .overons{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+
+ }
+ h1{
+    font-size: 36px;
+    font-weight: 600;
+ }
+ p{
+    color:#777;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+
+ }
+.row{
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.overons-col{
+    flex-basis: 31%;
+    background:rgba(164, 234, 255, 0.7);
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+h3{
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.overons-col:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+}
+@media (max-width: 700px){
+    .row {
+        flex-direction: column;
+    }
+}
+
+/*---------------------------------------------------------------------------------*/
+
+.fotos{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;  
+}
+
+.fotos-col{
+    flex-basis: 32%;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.fotos-col img{
+     width: 100%;
+}
+.layer{
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    transition: 0.5s;
+}
+.layer:hover{
+    background:rgba(164, 234, 255, 0.7);
+}
+.layer h3{
+    width: 100%;
+    font-weight: 500;
+    color: #fff;
+    font-size: 26px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s;
+}
+.layer:hover h3{
+    bottom: 49%;
+    opacity: 1;
+}
+
+/*---------------------------------------------------------------*/
+
+.review{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;  
+}
+.review-col{
+    flex-basis: 44%;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    text-align: left;
+    background:rgba(164, 234, 255, 0.7);
+    padding: 25px;
+    cursor: pointer;
+    display: flex;
+}
+.review-col img{
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 30px;
+    border-radius: 50%;
+}
+.review-col p{
+    padding:0;
+}
+.review-col h3{
+    margin-top: 15px;
+    text-align: left;
+}
+.review-col .fa{
+    color: rgba(237, 240, 76, 0.7);
+}
+@media (max-width: 700px){
+    .review-col img{
+        margin-left: 0px;
+        margin-right: 15px;
+    }
+}
+
+/*----------------------------------------------------------------------*/
+
+.cta {
+    margin: 100px auto; /* Iets minder margin zodat het blok hoger blijft */
+    width: 90%; /* Breder maken voor betere zichtbaarheid */
+    height: 500px; /* Verhoog de hoogte voor een grotere afbeelding */
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    padding: 150px 0; /* Meer ruimte binnen het blok */
+}
+
+.cta h1 {
+    color: #fff;
+    margin-bottom: 40px;
+    padding: 0;
+    font-size: 2.5rem; /* Grotere tekst voor meer impact */
+}
+
+@media(max-width: 700px){
+    .cta h1{
+        font-size: 24px;
+    }
+}
+
+/*-----------------------------------------------------------------*/
+
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+
+}
+.footer h4{
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.icons .fa{
+    color: rgba(12, 91, 194, 0.7);
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+}
+
