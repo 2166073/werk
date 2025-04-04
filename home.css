@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
+         
+
+.header {
+    margin-bottom: 20px; 
+    color: white;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    background: black;
+    min-height: 70vh;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; 
+}
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FAF8F4;
+            overflow-x: hidden; 
+
+            margin: 0;
+          
+        }
+
+        .header {
+          margin-bottom: 20px;
+          color: white;
+          text-align: center;
+        }
+
+       header {
+            width: 80%;
+            margin: auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: black; 
+            color: white; 
+        }
+
+        .logo img {
+            width: 60px;
+        }
+
+        .nav-list {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            list-style: none;
+        }
+
+        .nav-list li {
+            margin: auto 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-btns {
+            display: flex;
+        }
+
+        .nav-list a {
+            text-decoration: none;
+            color: white; 
+        }
+
+        .nav-list li::after {
+            content: '';
+            height: 3px;
+            width: 0;
+            background: white;
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            transition: 0.5s;
+        }
+
+        .nav-list li:hover::after {
+            width: 100%;
+        }
+
+        .dropdown-menu ul a{
+            color:black
+          }
+          
+          .dropdown {
+            margin-left: auto;
+        }
+
+        .dropdown-menu ul a {
+            color: black;
+        }
+
+        .dropdown .btn-primary {
+            background-color: black;
+            border: none;
+        } 
+        
+        
+header{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(image/icon2.png);
+    background-position: bottom;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.header{
+    margin-bottom: 150px;
+    color: white;
+    text-align: center;
+}
+.header h2{
+    font-size: 4vmin;
+}
+.line{
+    width: 150px;
+    height: 4px;
+    background: black;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+.header h1{
+    font-size: 7vmin;
+    margin-top: 50px;
+    margin-bottom: 30px;
+
+}
+.ctn{
+    padding: 8px 15px;
+    background: grey  ;
+    border-radius: 30px;
+    color: whitesmoke;
+}
+
+.header-content {
+  display: flex;
+  background: black;
+  min-height: 70vh;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px; 
+        }
+
+        .intro-text {
+            flex-basis: 50%;
+            padding: 50px;
+        }
+
+        .intro-text h1 {
+            font-size: 60px;
+        }
+
+        .hero-text {
+          flex-basis: 50%;
+          padding: 50px;
+        }
+
+        .hero-img {
+            flex-basis: 50%;
+        }
+
+        .hero-img img {
+            max-width: 85%;
+        }
+
+        .btns {
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            padding: 12px 20px;
+            background: black;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            margin-right: 20px;
+          
+        }
+
+        
+.dropdown-menu ul a{
+  color:black
+}
+
+
+    .icons-conta{
+        background: #eee;
+        display: flex;
+        flex-wrap: wrap;
+        gap:1.5rem;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+       color: black;
+    }
+
+    .icons-conta .icons{
+        background: #fff;
+        border: .1rem solid rgba(0,0,0,.1);
+        padding:2rem;
+        display: flex;
+        align-items: center;
+        flex: 1 1 25rem;
+    }
+
+    .icons-conta .icons img{
+        height: 5rem;
+        margin-right: 2rem;
+    }
+
+    .icons-conta .icons h3{
+        color: black;
+        padding-bottom: .5rem;
+        font-size: 1.5rem;
+    }
+
+    .icons-container .icons span{
+        color: #999;
+        font-size:1.3rem;
+    }
+  
+  .footer{
+    width: 100%;
+    min-height: 100px;
+    padding: 20px 80px;
+    margin-top: 20px; /* Voeg margin-top toe */
+    background: black;
+    text-align: center;
+    position: relative;
+    bottom: 0; /* Zorg ervoor dat de footer altijd onderaan blijft */
+}
+.footer p{
+    color: whitesmoke;
+    margin: 20px auto;
+}
+
