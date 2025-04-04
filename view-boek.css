@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .navbar{
+    width: 85%;
+    margin: auto;
+    padding: 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+
+a{
+    text-decoration: none;
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+
+}.logo{
+    width: 40px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+
+}
+.navbar ul li a{
+text-decoration: none;
+color: black;
+text-transform: uppercase;
+}
+.navbar ul li::after{
+    content:'';
+    height: 3px;
+    width: 0;
+    background:#009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover:after{
+    width: 100%;
+}
+
+  
+
+.container {
+    width: 70%;
+    margin: auto;
+    margin-left: 230px; /* Ruimte naast de navbar */
+    padding: 20px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-container input[type=text] {
+    width: calc(100% - 20px); /* Breedte van input minus padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-container input[type=submit] {
+    background-color: rgb(3, 44, 3);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.form-container input[type=submit]:hover {
+    background-color: rgb(1, 34, 1);
+}
+
+.form-container a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    color: rgb(3, 44, 3);
+}
+
+
+        table {
+            width: 85%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: rgb(3, 44, 3);
+            color: white;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .action-links {
+            display: flex;
+            gap: 10px;
+        }
+        .action-links a, .action-links button {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-links a:hover, .action-links button:hover {
+            background-color: rgb(1, 34, 1);
+        }

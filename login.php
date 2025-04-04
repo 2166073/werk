@@ -1,45 +1,80 @@
 <?php
-session_start();
-include 'db.php';
+require 'Data/db.php'; // Haalt de databaseverbinding op
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+if(isset($_POST["submit"])) {
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-        
-        $stmt = $myDb->execute("SELECT * FROM users WHERE username = ?", [$username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $username;
-            header('Location: view_reservering.php'); 
-            exit;
-        } else {
-            echo "<p style='color:red'>Ongeldige inloggegevens!</p>";
-        }
+    $data = [
+        'username' => $username,
+        'password' => $password,
+    ];
+
+
+    $sql = "INSERT INTO login (username, password
+    ) VALUES (:username, :password )"; 
+    
+    $stmt=$pdo->prepare($sql);
+    $stmt->execute([
+        'username' => $username,
+        'password' => $password,
+    ]);
+
+    if ($stmt->rowCount() > 0) {
+        header("Location:medewerkerdash.php?success");
     }
-}
-?>
 
+  }
+ 
+
+?>
 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Login</title>
+    <link rel="stylesheet" href="styles/login.css">
 </head>
-<body class="text-center">
-    <div class="container mt-5">
-        <h1>Login</h1>
+<body>
+
+<div class="login-container">
+    <div class="login-box">
+        <h1>Welkom in Hotel Luxe</h1>
+        <p>Log in om uw reserveringen te bekijken</p>
         <form method="POST">
-            <input type="text" name="username" placeholder="Gebruikersnaam" class="form-control mb-3" required>
-            <input type="password" name="password" placeholder="Wachtwoord" class="form-control mb-3" required>
-            <button type="submit" class="btn btn-success">Login</button>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Gebruikersnaam" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Wachtwoord" required>
+            </div>
+
+            <!-- Dropdown menu voor Klanten/Medewerkers -->
+            <div class="input-box">
+                <label for="role">Selecteer rol:</label>
+                <select name="role" id="role" required>
+                    <option value=<a href="klantdash.php">Klant</option>
+                    <option value=<a href="medewerkerdash.php">Medewerker</option>
+                </select>
+            </div>
+
+            <div class="remember-forget">
+                <label><input type="checkbox"> Onthoud mij </label>
+                <a href="#">Wachtwoord vergeten?</a>
+            </div>
+
+            <input type="submit" class="btn" value="Login" name="submit">
+
+            <div class="register-link">
+                <p>Geen account? <a href="accountmaken.php">Registreer</a></p>
+            </div>
         </form>
-        <p class="mt-3">Nog geen account? <a href="accountmaken.php">Maak er één aan</a></p>
     </div>
+</div>
+
 </body>
 </html>

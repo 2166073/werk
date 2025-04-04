@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, rgba(164, 234, 255, 0.7), rgba(0, 0, 50, 0.9));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background:rgba(164, 234, 255, 0.7);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    width: 350px;
+    box-shadow: 0px 0px 15px rgba(12, 91, 194, 0.9);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.input-box {
+    margin: 15px 0;
+}
+
+.input-box input, .input-box select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    color: #0c5bc2;
+}
+
+.remember-forget {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.remember-forget a {
+    color: #ffd700;
+    text-decoration: none;
+}
+
+.remember-forget a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #ffd700;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #0c5bc2;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #e6c300;
+}
+
+.register-link {
+    margin-top: 15px;
+}
+
+.register-link a {
+    color: #ffd700;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
