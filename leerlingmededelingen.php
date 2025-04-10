@@ -9,30 +9,33 @@
     
 
 <?php
-include_once('leerling.php');
+// Start de sessie
+session_start();
+
+// Inclusies
+
+include_once 'leerling.php';
 include_once 'db.php';
 
-
-
-// if (isset($_GET["les_id"])) {
-    // $les_id = $_GET["les_id"];
-    
-// }
-
+// Controleer of de gebruiker ingelogd is als 'leerling'
 if (!isset($_SESSION['gebruiker_id']) || $_SESSION['rol'] !== 'leerling') {
-        header("Location: leerlingmededelingen.php");
-        exit;
+    header("Location: leerlingmededelingen.php");
+    exit;
 }
 
+// Haal alle mededelingen op voor de leerling
 $mededelingen = $leerling->haalAlleMededelingenOp();
 ?>
-<h2> mededelingen van andere leerlingen</2>
+
+<h2>Mededelingen van andere leerlingen</h2>  <!-- Correcte sluittag voor <h2> -->
+
 <?php
+// Loop door de mededelingen en toon ze
 foreach ($mededelingen as $mededeling): ?>
-<div style="border:1px solid #ccc; padding:10px; mrgin-bottom:10px;">
-    <strong><?= htmlspeacialchars($mededeling['naam'])?></strong> schreef op <?= $mededeling['datum']?>
+<div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <strong><?= htmlspecialchars($mededeling['naam']) ?></strong> schreef op <?= $mededeling['datum'] ?>
 </div>
-<?php endforeach?>
+<?php endforeach ?>
 
 </body>
 </html>

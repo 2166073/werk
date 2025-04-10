@@ -1,5 +1,5 @@
 <?php
-include_once 'db.php';
+include_once '../db.php';
 
 class Leerling {
     private $dbh;
@@ -86,6 +86,15 @@ class Leerling {
     public function updateOpmerking($opmerking, $leerling_id) {
         $sql = "UPDATE leerling SET opmerking = ? WHERE leerling_id = ?";
         return $this->dbh->execute($sql, [$opmerking, $leerling_id]);
+    }
+
+    public function haalAlleMededelingenOp() {
+        // Query om mededelingen op te halen
+        $sql = "SELECT naam, datum FROM mededeling WHERE rol = 'leerling' ORDER BY datum DESC";
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retourneert de mededelingen
     }
 
     public function getAllLeerlingen() {

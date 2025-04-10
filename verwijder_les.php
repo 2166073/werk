@@ -1,86 +1,90 @@
 <?php
-//connectie
+include '../db.php';
+$db = new DB();
+
+// Start sessie en controleer of gebruiker ingelogd is als leerling
 session_start();
-include 'db.php';
-
-$db = new DB("drivesmart");
-
-// Controleer of de gebruiker is ingelogd als leerling
-if (!isset($_SESSION['gebruiker_id'])) {
-    header("Location: login.php");
-    exit();
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'leerling') {
+    header('Location: login.php');
+    exit;
 }
 
-// Controleer of les_id is verzonden
-if (isset($_POST['les_id'])) {
-    $les_id = $_POST['les_id'];
+// Haal leerling_id op via gebruiker_id
+$leerling = $db->execute(
+    "SELECT leerling_id FROM leerling WHERE gebruiker_id = ?",
+    [$_SESSION['gebruiker_id']]
+)->fetch(PDO::FETCH_ASSOC);
 
-    // Haal de les op die verwijderd moet worden
+if (!$leerling) {
+    die("Leerling niet gevonden.");
+}
+
+$leerling_id = $leerling['leerling_id'];
+
+// Controleer of een les_id is meegegeven
+if (isset($_GET['les_id'])) {
+    $les_id = $_GET['les_id'];
+
+    // Haal de les op
     $les = $db->execute(
-        "SELECT * FROM les WHERE les_id = ?",
-        [$les_id]
+        "SELECT * FROM les WHERE les_id = ? AND leerling_id = ?",
+        [$les_id, $leerling_id]
     )->fetch(PDO::FETCH_ASSOC);
 
     if (!$les) {
-        die("Les niet gevonden.");
+        die("Les niet gevonden of je hebt geen toestemming om deze les te verwijderen.");
     }
 
-    // Verwijder de les uit de les-tabel en verplaats de gegevens naar de verwijderde_lessen-tabel
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reden'])) {
+    // Verwijder de les door de gegevens op te slaan in 'verwijderd_les' tabel
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $reden = $_POST['reden'];
 
-        try {
-            // Verplaats de les naar de verwijderde_lessen tabel
-            $db->execute(
-                "INSERT INTO verwijderd_les (les_id, reden)
-                 VALUES (?, ?)",
-                [$les['les_id'], $reden]
-            );
+        // Sla de les op in de 'verwijderd_les' tabel
+        $db->execute(
+            "INSERT INTO verwijderd_les (les_id, reden) VALUES (?, ?)",
+            [$les_id, $reden]
+        );
 
-            // Verwijder de les uit de les-tabel
-            $db->execute(
-                "DELETE FROM les WHERE les_id = ?",
-                [$les_id]
-            );
+        // Verwijder de les uit de 'les' tabel
+        $db->execute(
+            "DELETE FROM les WHERE les_id = ?",
+            [$les_id]
+        );
 
-            // Redirect naar een bevestigingspagina of naar de overzichtspagina
-            header("Location: leerlingview-les.php");
-            exit();
-        } catch (PDOException $e) {
-            die("Fout bij verwijderen: " . $e->getMessage());
-        }
+        $success = "Les succesvol verwijderd.";
+        header("Location: leerling_viewles.php"); // Terug naar het lesrooster
+        exit();
     }
 } else {
-    die("Geen les gevonden om te verwijderen.");
+    die("Geen les_id opgegeven.");
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Verwijderen</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h2>Les Verwijderen</h2>
 
-        <p>Weet je zeker dat je de les van <?= htmlspecialchars($les['les_id'])  ?> wilt verwijderen?</p>
+<div class="container mt-5">
+    <h2>Les Verwijderen</h2>
 
-        <form method="POST">
-            <input type="hidden" name="les_id" value="<?= $les['les_id'] ?>">
+    <?php if (isset($success)): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
 
-            <div class="form-group">
-                <label for="reden">Reden voor verwijdering:</label>
-                <textarea name="reden" id="reden" class="form-control" rows="4" required></textarea>
-            </div>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="reden" class="form-label">Reden voor verwijdering</label>
+            <textarea class="form-control" id="reden" name="reden" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-danger">Bevestigen</button>
+        <a href="leerling_viewles.php" class="btn btn-secondary">Annuleren</a>
+    </form>
+</div>
 
-            <button type="submit" class="btn btn-danger mt-3">Verwijder Les</button>
-            <a href="les_inplannen.php" class="btn btn-secondary mt-3">Annuleer</a>
-        </form>
-    </div>
 </body>
 </html>
