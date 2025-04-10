@@ -7,19 +7,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db->execute("
         UPDATE les 
         SET datum = ?, ophaallocatie = ?, pakket = ?, 
-            instructeur_opmerking = ?,  
+            leerling_opmerking = ?,  
             leerling_id = ?
         WHERE les_id = ?
     ", [
         $_POST['datum'],
         $_POST['ophaallocatie'],
         $_POST['pakket'],
-        $_POST['instructeur_opmerking'],
+        $_POST['leerling_opmerking'],
         $_POST['leerling_id'],
         $_POST['les_id']
     ]);
 
-    header('Location: week_rooster.php');
+    header('Location: dag_rooster.php');
     exit;
 }
 
@@ -59,7 +59,7 @@ $leerlingen = $db->execute("SELECT leerling_id, naam, achternaam FROM leerling")
     <main class="main-content">
         <h2>Les Bewerken</h2>
 
-        <form action="les_bewerken.php" method="post">
+        <form action="leerlinglesbekijen.php" method="post">
             <input type="hidden" name="les_id" value="<?= $les['les_id'] ?>">
 
             <label>Datum:</label><br>
@@ -71,19 +71,12 @@ $leerlingen = $db->execute("SELECT leerling_id, naam, achternaam FROM leerling")
             <label>Pakket:</label><br>
             <input type="text" name="pakket" value="<?= htmlspecialchars($les['pakket']) ?>" required><br><br>
 
-            <label>Instructeur-opmerking:</label><br>
-            <input type="text" name="instructeur_opmerking" value="<?= htmlspecialchars($les['instructeur_opmerking']) ?>"><br><br>
+            <labe>leerling-opmerking:</label><br>
+            <input type="text" name="leerling_opmerking" value="<?= htmlspecialchars($les['leerling_opmerking']) ?>"><br><br>
 
 
 
-            <label>Leerling:</label><br>
-            <select name="leerling_id" required>
-                <?php foreach ($leerlingen as $leerling): ?>
-                    <option value="<?= $leerling['leerling_id'] ?>" <?= $les['leerling_id'] == $leerling['leerling_id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($leerling['naam'] . ' ' . $leerling['achternaam']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select><br><br>
+    
 
             <input type="submit" value="Opslaan" class="btn btn-primary">
         </form>
