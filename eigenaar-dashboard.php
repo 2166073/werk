@@ -1,7 +1,6 @@
 <?php
 include_once 'db.php';
 include 'instructeur.php';
-include 'navbar.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // 1. Gebruiker toevoegen
@@ -43,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="eigenaar-dashboard.php">Dashboard</a></li>
+                <li><a href="eigenaar-dashboard.php">Home</a></li>
                 <li><a href="eigenaar-auto-toevoegen.php">Auto toevoegen</a></li>
                 <li><a href="eigenaar-wagenpark.php">Wagenpark overzicht</a></li>
                 <li><a href="eigenaar-pakket-toevoegen.php">Pakket toevoegen</a></li>

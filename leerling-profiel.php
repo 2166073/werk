@@ -43,13 +43,12 @@ if (isset($_GET['error'])) {
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="leerling-dashboard.php">Dashboard</a></li>
-                <li><a href="les_rooster.php">Les rooster</a></li>
-                <li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
-                <li><a href="leerling-profiel.php">Profiel</a></li>
-                <li><a href="#">Feedback</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="logout.php">Afmelden</a></li>
+            <li><a href="leerling-dashboard.php">Home</a></li>
+        <li><a href="leerlingview-les.php">Les rooster</a></li>
+        <li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
+        <li><a href="leerling-profiel.php">Profiel</a></li>
+        <li><a href="view_mededelingenleerling.php">Mededeling</a></li>
+        <li><a href="logout.php">Afmelden</a></li>
             </ul>
         </nav>
     </aside>

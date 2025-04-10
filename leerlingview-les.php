@@ -40,14 +40,12 @@ $lessen = $db->execute("
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="leerling-dashboard.php">Home</a></li>
-                <li><a href="#">Week rooster</a></li>
-                <li><a href="dag_rooster.php">Dag rooster</a></li>
-                <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-                <li><a href="view_mededeling.php">Mededeling</a></li>
-                <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
-                <li><a href="logout.php">Uitloggen</a></li>
+            <li><a href="leerling-dashboard.php">Home</a></li>
+        <li><a href="leerlingview-les.php">Les rooster</a></li>
+        <li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
+        <li><a href="leerling-profiel.php">Profiel</a></li>
+        <li><a href="view_mededelingenleerling.php">Mededeling</a></li>
+        <li><a href="logout.php">Afmelden</a></li>
             </ul>
         </nav>
     </aside>
@@ -65,6 +63,7 @@ $lessen = $db->execute("
                             <th>Leerling</th>
                             <th>Leerling Opmerking</th>
                             <th>Instructeur Opmerking</th>
+                            <th>Actie</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,6 +75,8 @@ $lessen = $db->execute("
                                 <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
                                 <td><?= htmlspecialchars($les['leerling_opmerking']) ?></td>
                                 <td><?= htmlspecialchars($les['instructeur_opmerking']) ?></td>
+                                <td><a href="leerlinglesbekijen.php?les_id=<?= $les['les_id'] ?>">Bewerken</a> </td>|
+                              <td>  <a href="les_verwijderen.php?les_id=<?= $les['les_id'] ?>" onclick="return confirm('Weet je zeker dat je deze les wilt verwijderen?')">Verwijderen</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

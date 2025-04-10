@@ -23,7 +23,7 @@ include 'navbar.php';
     <div class="container">
         <section class="promo-section">
             <div class="promo-box">
-                <h2>Je Rijbewijs Snel En Voordelig Halen In Pure Luxe 🚘</h2>
+                <h2>Je Rijbewijs Snel En Voordelig Halen In Pure Luxe </h2>
                 <p class="luxury-text">In stijl, pure luxe en comfort lessen in een gloednieuwe Mercedes en in één keer je rijbewijs halen.</p>
                 <div class="benefits">
                     <p>✅ GÉÉN wachttijden, start direct.</p>

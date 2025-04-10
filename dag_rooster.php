@@ -40,55 +40,59 @@ $lessen = $db->execute("
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="instructeur-dashboard.php">Home</a></li>
-                <li><a href="#">Week rooster</a></li>
-                <li><a href="dag_rooster.php">Dag rooster</a></li>
-                <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-                <li><a href="view_mededeling.php">Mededeling</a></li>
-                <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
-                <li><a href="logout.php">Uitloggen</a></li>
+            <li><a href="instructeur-dashboard.php">Home</a></li>
+        <li><a href="week_rooster.php">Week rooster</a></li>
+        <li><a href="dag_rooster.php">Dag rooster</a></li>
+        <li><a href="les_aanmaken.php">Les aanmaken</a></li>
+        <li><a href="mankement_melden.php">Mankement melden</a></li>
+        <li><a href="kilometerstand_invoeren.php">Kilometerstand invoeren</a></li>
+        <li><a href="view_mededeling.php">Mededeling</a></li>
+        <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
+        <li><a href="logout.php">Uitloggen</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content">
-        <div class="container mt-5">
-            <h2>Rooster voor vandaag (<?= date("d-m-Y") ?>)</h2>
-            <?php if (count($lessen) > 0): ?>
-                <table class="table table-bordered">
-                    <thead>
+    <div class="container mt-5">
+        <h2>Rooster voor vandaag (<?= date("d-m-Y") ?>)</h2>
+        <?php if (count($lessen) > 0): ?>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Ophaallocatie</th>
+                        <th>Pakket</th>
+                        <th>Leerling</th>
+                        <th>Leerling Opmerking</th>
+                        <th>Instructeur Opmerking</th>
+                        <th>Acties</th> <!-- Nieuwe kolom voor acties -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($lessen as $les): ?>
                         <tr>
-                            <th>Datum</th>
-                            <th>Ophaallocatie</th>
-                            <th>Pakket</th>
-                            <th>Leerling</th>
-                            <th>Leerling Opmerking</th>
-                            <th>Instructeur Opmerking</th>
+                            <td><?= htmlspecialchars($les['datum']) ?></td>
+                            <td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
+                            <td><?= htmlspecialchars($les['pakket']) ?></td>
+                            <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
+                            <td><?= htmlspecialchars($les['leerling_opmerking']) ?></td>
+                            <td><?= htmlspecialchars($les['instructeur_opmerking']) ?></td>
+                            <td>
+                                <a href="les_bewerken.php?les_id=<?= $les['les_id'] ?>" class="btn btn-warning btn-sm">Bewerken</a>
+                                <a href="les_verwijderen.php?les_id=<?= $les['les_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Weet je zeker dat je deze les wilt verwijderen?')">Verwijderen</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($lessen as $les): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($les['datum']) ?></td>
-                                <td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
-                                <td><?= htmlspecialchars($les['pakket']) ?></td>
-                                <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
-                                <td><?= htmlspecialchars($les['leerling_opmerking']) ?></td>
-                                <td><?= htmlspecialchars($les['instructeur_opmerking']) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <button class="btn btn-primary" onclick="window.print()">Print Reservering</button>
- 
-            <?php else: ?>
-                <p>Er zijn geen lessen voor vandaag.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>Er zijn geen lessen voor vandaag.</p>
+        <?php endif; ?>
 
-            <a href="instructeur-dashboard.php" class="btn btn-secondary mt-4">Terug naar Dashboard</a>
-        </div>
-    </main>
+        <a href="instructeur-dashboard.php" class="btn btn-secondary mt-4">Terug naar Dashboard</a>
+    </div>
+</main>
 </div>
 
 </body>

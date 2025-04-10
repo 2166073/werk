@@ -16,7 +16,8 @@ $einde_van_week = date("Y-m-d", strtotime('sunday this week'));
 // Haal de lessen van de instructeur op voor de huidige week
 $lessen = $db->execute("
     SELECT l.les_id, l.datum, l.ophaallocatie, l.pakket, 
-           CONCAT(le.naam, ' ', le.achternaam) AS leerling_naam
+           CONCAT(le.naam, ' ', le.achternaam) AS leerling_naam,
+           l.leerling_opmerking, l.instructeur_opmerking
     FROM les l
     JOIN leerling le ON l.leerling_id = le.leerling_id
     WHERE DATE(l.datum) BETWEEN ? AND ? AND l.instructeur_id = ?
@@ -40,14 +41,15 @@ $lessen = $db->execute("
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="instructeur-dashboard.php">Home</a></li>
-                <li><a href="week_rooster.php">Week rooster</a></li>
-                <li><a href="dag_rooster.php">Dag rooster</a></li>
-                <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-                <li><a href="view_mededeling.php">Mededeling</a></li>
-                <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
-                <li><a href="logout.php">Uitloggen</a></li>
+        <li><a href="instructeur-dashboard.php">Home</a></li>
+        <li><a href="week_rooster.php">Week rooster</a></li>
+        <li><a href="dag_rooster.php">Dag rooster</a></li>
+        <li><a href="les_aanmaken.php">Les aanmaken</a></li>
+        <li><a href="mankement_melden.php">Mankement melden</a></li>
+        <li><a href="kilometerstand_invoeren.php">Kilometerstand invoeren</a></li>
+        <li><a href="view_mededeling.php">Mededeling</a></li>
+        <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
+        <li><a href="logout.php">Uitloggen</a></li>
             </ul>
         </nav>
     </aside>
@@ -65,6 +67,9 @@ $lessen = $db->execute("
                             <th>Ophaallocatie</th>
                             <th>Pakket</th>
                             <th>Leerling</th>
+                            <th>Leerling Opmerking</th>
+                            <th>Instructeur Opmerking</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +80,12 @@ $lessen = $db->execute("
                                 <td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
                                 <td><?= htmlspecialchars($les['pakket']) ?></td>
                                 <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
+                                <td><?= htmlspecialchars($les['leerling_opmerking']) ?></td>
+                                <td><?= htmlspecialchars($les['instructeur_opmerking']) ?></td>
+                                <td>
+                                    <a href="les_bewerken.php?les_id=<?= $les['les_id'] ?>" class="btn btn-warning btn-sm">Bewerken</a>
+                                    <a href="les_verwijderen.php?les_id=<?= $les['les_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Weet je zeker dat je deze les wilt verwijderen?')">Verwijderen</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
