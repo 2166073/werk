@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+include '../db.php';
 
 // Controleer of de gebruiker is ingelogd als eigenaar
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'eigenaar') {

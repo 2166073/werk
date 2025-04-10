@@ -1,7 +1,6 @@
 <?php
-include_once 'db.php';
-include 'instructeur.php';
-include 'navbar.php';
+include_once '../db.php';
+include_once  '../instructeur/instructeur.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // 1. Gebruiker toevoegen
@@ -34,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Eigenaar Dashboard</title>
-    <link rel="stylesheet" href="instructeur-dashboard.css">
-    <link rel="stylesheet" href="eigenaar-dashboard.css">
+    <link rel="stylesheet" href="../css/instructeur-dashboard.css">
+    <link rel="stylesheet" href="../css/eigenaar-dashboard.css">
 </head>
 <body>
 <div class="dashboard-container">
@@ -43,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="eigenaar-dashboard.php">Dashboard</a></li>
+                <li><a href="eigenaar-dashboard.php">Home</a></li>
                 <li><a href="eigenaar-auto-toevoegen.php">Auto toevoegen</a></li>
                 <li><a href="eigenaar-wagenpark.php">Wagenpark overzicht</a></li>
                 <li><a href="eigenaar-pakket-toevoegen.php">Pakket toevoegen</a></li>

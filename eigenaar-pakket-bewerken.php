@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'db.php';
-include 'navbar.php';
+include '../db.php';
+include '../navbar.php';
 
 // Controleer of de gebruiker is ingelogd als eigenaar
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'eigenaar') {

@@ -1,7 +1,6 @@
 <?php
 session_start();
-include 'db.php';
-include 'navbar.php';
+include '../db.php';
 
 // Controleer of de gebruiker is ingelogd als eigenaar
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'eigenaar') {
@@ -27,63 +26,86 @@ $autos = $db->execute("
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wagenpark - DriveSmart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="leerling-dashboard.css">
+    <style>
+        .container { max-width: 600px; margin-top: 50px; }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Wagenpark Overzicht</h2>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <h2>DriveSmart</h2>
+        <nav>
+            <ul>
+                <li><a href="eigenaar-dashboard.php">Home</a></li>
+                <li><a href="eigenaar-auto-toevoegen.php">Auto toevoegen</a></li>
+                <li><a href="eigenaar-wagenpark.php">Wagenpark overzicht</a></li>
+                <li><a href="eigenaar-pakket-toevoegen.php">Pakket toevoegen</a></li>
+                <li><a href="eigenaar-instructeur-toevoegen.php">Instructeur toevoegen</a></li>
+                <li><a href="mededelingen.php">Mededeling</a></li>
+                <li><a href="logout.php">Uitloggen</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-        <?php if (isset($_GET['success'])): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($_GET['success']) ?></div>
-        <?php endif; ?>
+    <main class="main-content">
+        <div class="container mt-4">
+            <h2>Wagenpark Overzicht</h2>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4>Beheer alle voertuigen</h4>
-            <a href="eigenaar-auto-toevoegen.php" class="btn btn-primary">Nieuwe Auto Toevoegen</a>
-        </div>
+            <?php if (isset($_GET['success'])): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($_GET['success']) ?></div>
+            <?php endif; ?>
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Kenteken</th>
-                        <th>Merk</th>
-                        <th>Model</th>
-                        <th>Instructeur</th>
-                        <th>Status</th>
-                        <th>Acties</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($autos as $auto): ?>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>Beheer alle voertuigen</h4>
+                <a href="eigenaar-auto-toevoegen.php" class="btn btn-primary">Nieuwe Auto Toevoegen</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($auto['kenteken']) ?></td>
-                            <td><?= htmlspecialchars($auto['merk']) ?></td>
-                            <td><?= htmlspecialchars($auto['model']) ?></td>
-                            <td><?= htmlspecialchars($auto['instructeur_naam'] ?? 'Niet toegewezen') ?></td>
-                            <td>
-                                <?php if ($auto['onderhoud']): ?>
-                                    <span class="badge bg-warning">In onderhoud</span>
-                                <?php else: ?>
-                                    <span class="badge bg-success">Beschikbaar</span>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <?php if ($auto['onderhoud']): ?>
-                                    <a href="eigenaar-auto-onderhoud-klaar.php?auto_id=<?= $auto['auto_id'] ?>" 
-                                       class="btn btn-sm btn-success">Onderhoud Klaar</a>
-                                <?php else: ?>
-                                    <a href="eigenaar-auto-onderhoud.php?auto_id=<?= $auto['auto_id'] ?>" 
-                                       class="btn btn-sm btn-warning">In Onderhoud</a>
-                                <?php endif; ?>
-                                <a href="eigenaar-auto-verwijderen.php?auto_id=<?= $auto['auto_id'] ?>" 
-                                   class="btn btn-sm btn-danger" 
-                                   onclick="return confirm('Weet je zeker dat je deze auto wilt verwijderen?')">Verwijderen</a>
-                            </td>
+                            <th>Kenteken</th>
+                            <th>Merk</th>
+                            <th>Model</th>
+                            <th>Instructeur</th>
+                            <th>Status</th>
+                            <th>Acties</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($autos as $auto): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($auto['kenteken']) ?></td>
+                                <td><?= htmlspecialchars($auto['merk']) ?></td>
+                                <td><?= htmlspecialchars($auto['model']) ?></td>
+                                <td><?= htmlspecialchars($auto['instructeur_naam'] ?? 'Niet toegewezen') ?></td>
+                                <td>
+                                    <?php if ($auto['onderhoud']): ?>
+                                        <span class="badge bg-warning">In onderhoud</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-success">Beschikbaar</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if ($auto['onderhoud']): ?>
+                                        <a href="eigenaar-auto-onderhoud-klaar.php?auto_id=<?= $auto['auto_id'] ?>" 
+                                           class="btn btn-sm btn-success">Onderhoud Klaar</a>
+                                    <?php else: ?>
+                                        <a href="eigenaar-auto-onderhoud.php?auto_id=<?= $auto['auto_id'] ?>" 
+                                           class="btn btn-sm btn-warning">In Onderhoud</a>
+                                    <?php endif; ?>
+                                    <a href="eigenaar-auto-verwijderen.php?auto_id=<?= $auto['auto_id'] ?>" 
+                                       class="btn btn-sm btn-danger" 
+                                       onclick="return confirm('Weet je zeker dat je deze auto wilt verwijderen?')">Verwijderen</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </main>
+</div>
 </body>
 </html>
