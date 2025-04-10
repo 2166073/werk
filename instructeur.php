@@ -1,5 +1,5 @@
 <?php
-include_once 'db.php';
+include_once '../db.php';
 
 class Instructeur {
     private $dbh;
@@ -59,6 +59,14 @@ public function voegStandaardRoosterToe($instructeur_id) {
         WHERE DAYOFWEEK(CURDATE() + INTERVAL seq DAY) BETWEEN 2 AND 6
     ";
     $this->dbh->execute($sql, [$instructeur_id]);
+}
+public function haalAlleMededelingenOp() {
+    // Query om mededelingen op te halen
+    $sql = "SELECT naam, datum FROM mededeling WHERE rol = 'instructeur' ORDER BY datum DESC";
+    $stmt = $this->dbh->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retourneert de mededelingen
 }
 }
 ?>

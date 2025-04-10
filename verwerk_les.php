@@ -1,48 +1,67 @@
 <?php
-include 'db.php';
 session_start();
+include '../db.php';
 
-// Controleer of de gebruiker een instructeur is
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'instructeur') {
-    die("Je moet ingelogd zijn als instructeur.");
-}
+$db = new DB("drivesmart");
 
-// Haal het instructeur_id uit de sessie
-$instructeur_id = $_SESSION['rol_id'];
-
-$database = new DB();
-
-// Verkrijg de gegevens uit het formulier
-$datum = $_POST['datum'] ?? null;
-$ophaallocatie = $_POST['ophaallocatie'] ?? null;
-$pakket = $_POST['pakket'] ?? null;
-$instructeur_opmerking = $_POST['instructeur_opmerking'] ?? null;
-$leerling_id = $_POST['leerling_id'] ?? null;
-
-if (!$datum || !$ophaallocatie || !$pakket || !$instructeur_opmerking || !$instructeur_id || !$leerling_id) {
+// Controleer of alle velden zijn ingevuld
+if (
+    empty($_POST['datum']) ||
+    empty($_POST['starttijd']) ||
+    empty($_POST['eindtijd']) ||
+    empty($_POST['ophaallocatie']) ||
+    empty($_POST['instructeur_opmerking']) ||
+    empty($_POST['pakket']) ||
+    empty($_POST['leerling_id'])
+) {
     die("Alle velden zijn verplicht.");
 }
 
-// SQL-query om de les toe te voegen
-$sql = "INSERT INTO les (datum, ophaallocatie, pakket, instructeur_opmerking, instructeur_id, leerling_id) 
-        VALUES (:datum, :ophaallocatie, :pakket, :instructeur_opmerking, :instructeur_id, :leerling_id)";
+// Haal waarden op uit het formulier
+$datum = $_POST['datum'];
+$starttijd = $_POST['starttijd'];
+$eindtijd = $_POST['eindtijd'];
+$ophaallocatie = $_POST['ophaallocatie'];
+$opmerking = $_POST['instructeur_opmerking'];
+$pakket = $_POST['pakket'];
+$leerling_id = $_POST['leerling_id'];
 
-$params = [
-    ':datum' => $datum,
-    ':ophaallocatie' => $ophaallocatie,
-    ':pakket' => $pakket,
-    ':instructeur_opmerking' => $instructeur_opmerking,
-    ':instructeur_id' => $instructeur_id,
-    ':leerling_id' => $leerling_id
-];
-
-// Voer de query uit
-$stmt = $database->execute($sql, $params);
-
-if ($stmt) {
-    header("Location: instructeur-dashboard.php");
-    exit;
-} else {
-    echo "Er is een fout opgetreden bij het toevoegen van de les.";
+// Zorg dat je een geldige instructeur_id hebt uit de sessie
+if (!isset($_SESSION['gebruiker_id'])) {
+    die("Niet ingelogd als instructeur.");
 }
-?>
+
+$instructeur = $db->execute(
+    "SELECT instructeur_id FROM instructeur WHERE gebruiker_id = ?",
+    [$_SESSION['gebruiker_id']]
+)->fetch(PDO::FETCH_ASSOC);
+
+if (!$instructeur) {
+    die("Instructeur niet gevonden.");
+}
+
+$instructeur_id = $instructeur['instructeur_id'];
+
+// (Optioneel) Een auto selecteren
+$auto = $db->execute("SELECT auto_id FROM auto LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+$auto_id = $auto ? $auto['auto_id'] : null;
+
+// Voeg de les toe aan de database
+$db->execute("
+    INSERT INTO les (datum, starttijd, eindtijd, ophaallocatie, instructeur_opmerking, pakket, leerling_id, instructeur_id, auto_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+", [
+    $datum,
+    $starttijd,
+    $eindtijd,
+    $ophaallocatie,
+    $opmerking,
+    $pakket,
+    $leerling_id,
+    $instructeur_id,
+    $auto_id
+]);
+
+// ✅ Redirect naar leerling_viewles.php
+header("Location: dag_rooster.php");
+exit;

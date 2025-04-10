@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../db.php';
 $db = new DB();
 
 // Controleer of de gebruiker ingelogd is en een instructeur is
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mankement Melden</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="instructeur-dashboard.css">
+    <link rel="stylesheet" href="../css/instructeur-dashboard.css">
 </head>
 <body>
 
@@ -50,15 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>DriveSmart</h2>
         <nav>
             <ul>
-                <li><a href="instructeur-dashboard.php">Home</a></li>
-                <li><a href="week_rooster.php">Week rooster</a></li>
-                <li><a href="dag_rooster.php">Dag rooster</a></li>
-                <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-                <li><a href="view_mededeling.php">Mededeling</a></li>
-                <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
-                <li><a href="mankement_melden.php">Mankement melden</a></li>
-                <li><a href="logout.php">Uitloggen</a></li>
+            <li><a href="instructeur-dashboard.php">Home</a></li>
+        <li><a href="week_rooster.php">Week rooster</a></li>
+        <li><a href="dag_rooster.php">Dag rooster</a></li>
+        <li><a href="les_aanmaken.php">Les aanmaken</a></li>
+        <li><a href="mankement_melden.php">Mankement melden</a></li>
+        <li><a href="kilometerstand_invoeren.php">Kilometerstand invoeren</a></li>
+        <li><a href="view_mededeling.php">Mededeling</a></li>
+        <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
+        <li><a href="logout.php">Uitloggen</a></li>
             </ul>
         </nav>
     </aside>
