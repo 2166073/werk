@@ -1,0 +1,138 @@
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('drivesmart-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.promo-section {
+    margin: 50px 0;
+}
+
+.promo-box {
+    background-color: #f8f9fa;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.promo-box h2 {
+    color: #333;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.luxury-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.benefits {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.benefits p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #04AA6D;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #038857;
+    color: white;
+}
+
+.features {
+    margin: 70px 0;
+}
+
+.feature-box {
+    text-align: center;
+    padding: 30px;
+    transition: transform 0.3s;
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.feature-box h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.why-us {
+    background-color: #f8f9fa;
+    padding: 70px 0;
+    margin: 50px 0;
+}
+
+.why-us h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.info-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    height: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-box h3 {
+    color: #04AA6D;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .promo-box {
+        padding: 20px;
+    }
+    
+    .benefits {
+        text-align: center;
+    }
+}

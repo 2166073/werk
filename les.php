@@ -1,80 +1,42 @@
 <?php
+include_once 'db.php';
 
 class Les {
-    private $db;
+    private $dbh;
 
-    // Constructor voor de DB connectie
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct($dbh) {
+        $this->dbh = $dbh;
     }
 
-    // Functie om een les te verwijderen
-    public function deleteLes($id, $reden) {
-        // Sla de reden op in de verwijderde_lessen tabel
-        $query = "INSERT INTO verwijderde_lessen (les_id, reden) VALUES (:id, :reden)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':reden', $reden);
-        $stmt->execute();
+    public function addLes($leerling_id, $instructeur_id, $datum, $ophaallocatie, $leerling_opmerking, $instructeur_opmerking) {
+        $sql = "INSERT INTO les (leerling_id, instructeur_id, datum, ophaallocatie, leerling_opmerking, instructeur_opmerking)
+                VALUES (?, ?, ?, ?, ?, ?)";
+        return $this->dbh->execute($sql, [$leerling_id, $instructeur_id, $datum, $ophaallocatie, $leerling_opmerking, $instructeur_opmerking]);
+    }
 
-        // Verwijder de les uit de originele lessen tabel
-        $query = "DELETE FROM lessen WHERE les_id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+    public function getLesById($les_id) {
+        $sql = "SELECT * FROM les WHERE les_id = ?";
+        $stmt = $this->dbh->execute($sql, [$les_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    public function updateleerling_Opmerking($leerling_opmerking, $les_id) {
+        $sql = "UPDATE les SET leerling_opmerking = ? WHERE les_id = ?";
+        return $this->dbh->execute($sql, [$leerling_opmerking, $les_id]);
+    }
+    public function updateLes( $datum, $ophaallocatie, $leerling_opmerking, $instructeur_opmerking, $les_id) {
+        $sql = "UPDATE les SET datum = ?,  ophaallocatie = ?,  leerling_opmerking = ?, instructeur_opmerking= ? WHERE les_id = ?";
+        return $this->dbh->execute($sql, array($datum, $ophaallocatie, $leerling_opmerking, $instructeur_opmerking, $les_id));
+    }
+    public function deleteLes($les_id) {
+        $sql = "DELETE FROM les WHERE id = ?";
+        return $this->dbh->execute($sql, array($les_id));
+    }
+
+ public function getAllLessen() {
+        $sql = "SELECT * FROM les";
+        return $this->dbh->execute($sql);
     }
 }
 ?>
-
-
-
-<?php
-
-class Les {
-    private $db;
-
-    // Constructor voor de DB connectie
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
-    // Functie om een les te verwijderen (of markeren als verwijderd)
-    public function deleteLes($id, $reden) {
-        // Update de les om aan te geven dat deze is verwijderd en voeg de reden toe
-        $query = "UPDATE lessen SET reden = :reden, verwijder_datum = NOW() WHERE les_id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':reden', $reden);
-        $stmt->execute();
-    }
-}
-?>
-  <!-- #region 
-   verberterd --> <?php
-
-class Les {
-    private $db;
-
-    // Constructor voor de DB connectie
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
-    // Functie om een les te verwijderen
-    public function deleteLes($id, $reden) {
-        // Sla de reden op in de verwijderde_lessen tabel
-        $query = "INSERT INTO verwijderde_lessen (les_id, reden) VALUES (:id, :reden)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':reden', $reden);
-        $stmt->execute();
-
-        // Verwijder de les uit de originele lessen tabel
-        $query = "DELETE FROM lessen WHERE les_id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-    }
-}
-?>
-
