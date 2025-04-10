@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'db.php';
+require_once '../db.php';
 require_once 'leerling.php';
-include 'navbar.php';
+include '../navbar.php';
 
 // Controleer of een leerling is ingelogd
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'leerling' || !isset($_SESSION['rol_id'])) {
@@ -45,7 +45,7 @@ $mededelingen = $db->execute("
 <head>
   <meta charset="UTF-8">
   <title>DriveSmart | Leerling Dashboard</title>
-  <link rel="stylesheet" href="leerling-dashboard.css">
+  <link rel="stylesheet" href="../css/leerling-dashboard.css">
 </head>
 <body>
 
@@ -54,13 +54,12 @@ $mededelingen = $db->execute("
     <h2>DriveSmart</h2>
     <nav>
       <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="leerlingview-les.php">Les rooster</a></li>
+        <li><a href="leerling-dashboard.php">Home</a></li>
+        <li><a href="leerling_viewles.php">Les rooster</a></li>
         <li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
         <li><a href="leerling-profiel.php">Profiel</a></li>
         <li><a href="view_mededelingenleerling.php">Mededeling</a></li>
-        <li><a href="contact.php">Contact</a></li>
-        <li><a href="logout.php">Afmelden</a></li>
+        <li><a href="../logout.php">Afmelden</a></li>
       </ul>
     </nav>
   </aside>

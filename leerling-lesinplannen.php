@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'db.php';
-include 'navbar.php';
+include_once '../db.php';
+include '../navbar.php';
 
 $db = new DB("drivesmart");
 
@@ -109,75 +109,94 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['plan_les'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Inplannen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/leerling-dashboard.css">
     <style>
         .container { max-width: 800px; margin-top: 50px; }
         .form-group { margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Les Inplannen</h2>
-        
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-        
-        <?php if (isset($success)): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
-        <?php endif; ?>
-        
-        <form method="POST">
-            <div class="form-group">
-                <label for="instructeur_id">Instructeur:</label>
-                <select class="form-control" id="instructeur_id" name="instructeur_id" required>
-                    <option value="">Selecteer instructeur</option>
-                    <?php foreach ($instructeurs as $instructeur): ?>
-                        <option value="<?= $instructeur['instructeur_id'] ?>">
-                            <?= htmlspecialchars($instructeur['naam']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <h2>DriveSmart</h2>
+        <nav>
+            <ul>
+                <li><a href="leerling-dashboard.php">Home</a></li>
+                <li><a href="leerling_viewles.php">Les rooster</a></li>
+                <li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
+                <li><a href="leerling-profiel.php">Profiel</a></li>
+                <li><a href="view_mededelingenleerling.php">Mededeling</a></li>
+                <li><a href="logout.php">Afmelden</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Les Inplannen</h2>
             
-            <div class="form-group">
-                <label for="auto_id">Auto:</label>
-                <select class="form-control" id="auto_id" name="auto_id" required>
-                    <option value="">Selecteer auto</option>
-                    <?php foreach ($autos as $auto): ?>
-                        <option value="<?= $auto['auto_id'] ?>">
-                            <?= htmlspecialchars($auto['merk']) ?> <?= htmlspecialchars($auto['model']) ?> - <?= htmlspecialchars($auto['kenteken']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
             
-            <div class="form-group">
-                <label for="datum">Datum:</label>
-                <input type="date" class="form-control" id="datum" name="datum" required>
-            </div>
+            <?php if (isset($success)): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+            <?php endif; ?>
             
-            <div class="form-group">
-                <label for="starttijd">Starttijd:</label>
-                <input type="time" class="form-control" id="starttijd" name="starttijd" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="eindtijd">Eindtijd:</label>
-                <input type="time" class="form-control" id="eindtijd" name="eindtijd" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="ophaallocatie">Ophaallocatie:</label>
-                <input type="text" class="form-control" id="ophaallocatie" name="ophaallocatie" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="leerling_opmerking">Opmerking:</label>
-                <textarea class="form-control" id="leerling_opmerking" name="leerling_opmerking" rows="3"></textarea>
-            </div>
-            
-            <button type="submit" name="plan_les" class="btn btn-primary">Les Inplannen</button>
-        </form>
-    </div>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="instructeur_id">Instructeur:</label>
+                    <select class="form-control" id="instructeur_id" name="instructeur_id" required>
+                        <option value="">Selecteer instructeur</option>
+                        <?php foreach ($instructeurs as $instructeur): ?>
+                            <option value="<?= $instructeur['instructeur_id'] ?>">
+                                <?= htmlspecialchars($instructeur['naam']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="auto_id">Auto:</label>
+                    <select class="form-control" id="auto_id" name="auto_id" required>
+                        <option value="">Selecteer auto</option>
+                        <?php foreach ($autos as $auto): ?>
+                            <option value="<?= $auto['auto_id'] ?>">
+                                <?= htmlspecialchars($auto['merk']) ?> <?= htmlspecialchars($auto['model']) ?> - <?= htmlspecialchars($auto['kenteken']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="datum">Datum:</label>
+                    <input type="date" class="form-control" id="datum" name="datum" required min="<?= date('Y-m-d'); ?>">
+                </div>
+                
+                <div class="form-group">
+                    <label for="starttijd">Starttijd:</label>
+                    <input type="time" class="form-control" id="starttijd" name="starttijd" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eindtijd">Eindtijd:</label>
+                    <input type="time" class="form-control" id="eindtijd" name="eindtijd" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ophaallocatie">Ophaallocatie:</label>
+                    <input type="text" class="form-control" id="ophaallocatie" name="ophaallocatie" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leerling_opmerking">Opmerking:</label>
+                    <textarea class="form-control" id="leerling_opmerking" name="leerling_opmerking" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" name="plan_les" class="btn btn-primary">Les Inplannen</button>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>

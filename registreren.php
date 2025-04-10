@@ -1,6 +1,6 @@
 <?php
-include 'db.php';
-include 'navbar.php';
+include '../db.php';
+include '../navbar.php';
 include 'leerling.php';
 
 
@@ -48,7 +48,7 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leerling Registratie</title>
-    <link rel="stylesheet" href="registreren.css">
+    <link rel="stylesheet" href="../css/registreren.css">
   
 </head>
 <body>
