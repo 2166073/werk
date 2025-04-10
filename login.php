@@ -18,13 +18,13 @@ try {
         if ($loginResult) {
             switch ($loginResult) {
                 case 'eigenaar':
-                    header('Location: eigenaar-dashboard.php');
+                    header('Location: eigenaar/eigenaar-dashboard.php');
                     break;
                 case 'leerling':
-                    header('Location: leerling-dashboard.php');
+                    header('Location: leerling/leerling-dashboard.php');
                     break;
                 case 'instructeur':
-                    header('Location: instructeur-dashboard.php');
+                    header('Location: instructeur/instructeur-dashboard.php');
                     break;
                 default:
                     $error = 'Onbekende rol: ' . htmlspecialchars($loginResult);
@@ -42,7 +42,7 @@ try {
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="login.css"> 
+    <link rel="stylesheet" href="css/login.css"> 
 </head>
 <body>
 
@@ -61,7 +61,7 @@ try {
 
         <button type="submit" name="submit">Inloggen</button>
 
-        <p>Nog geen account? <a href="registreren.php">Registreer hier</a></p>
+        <p>Nog geen account? <a href="leerling/registreren.php">Registreer hier</a></p>
     </form>
 </body>
 </html>

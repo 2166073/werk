@@ -14,7 +14,7 @@ $pakketten = $db->execute("SELECT * FROM pakket ORDER BY prijs ASC")->fetchAll(P
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Onze Rijlespakketten</title>
-  <link rel="stylesheet" href="style_pakketten.css"> 
+  <link rel="stylesheet" href="css/style_pakketten.css"> 
 </head>
 <body>
 

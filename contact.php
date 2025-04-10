@@ -6,7 +6,7 @@ include 'navbar.php';
 <head>
   <meta charset="UTF-8">
   <title>Contact | DriveSmart</title>
-  <link rel="stylesheet" href="contact.css">
+  <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
   <section class="contact-info">

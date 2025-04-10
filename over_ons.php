@@ -9,7 +9,7 @@ include 'navbar.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Over Ons | DriveSmart</title>
-    <link rel="stylesheet" href="over_ons.css">
+    <link rel="stylesheet" href="css/over_ons.css">
 </head>
 <body>
     <div class="container">

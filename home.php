@@ -9,7 +9,7 @@ include 'navbar.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveSmart | Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
     <div class="hero">
@@ -23,7 +23,7 @@ include 'navbar.php';
     <div class="container">
         <section class="promo-section">
             <div class="promo-box">
-                <h2>Je Rijbewijs Snel En Voordelig Halen In Pure Luxe 🚘</h2>
+                <h2>Je Rijbewijs Snel En Voordelig Halen In Pure Luxe </h2>
                 <p class="luxury-text">In stijl, pure luxe en comfort lessen in een gloednieuwe Mercedes en in één keer je rijbewijs halen.</p>
                 <div class="benefits">
                     <p>✅ GÉÉN wachttijden, start direct.</p>
