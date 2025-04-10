@@ -15,12 +15,10 @@
         <nav>
             <ul>
             <li><a href="instructeur-dashboard.php">Home</a></li>
-        <li><a href="week_rooster.php">Week rooster</a></li>
+        <li><a href="#">Week rooster</a></li>
         <li><a href="dag_rooster.php">Dag rooster</a></li>
         <li><a href="les_aanmaken.php">Les aanmaken</a></li>
         <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-        <li><a href="mankement_melden.php">Mankement melden</a></li>
-        <li><a href="kilometerstand_invoeren.php">Kilometerstand invoeren</a></li>
         <li><a href="view_mededeling.php">Mededeling</a></li>
         <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
         <li><a href="logout.php">Uitloggen</a></li>

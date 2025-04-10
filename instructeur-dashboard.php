@@ -8,7 +8,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'instructeur') {
     exit;
 }
 
-
+include 'navbar.php';
 
 // Instructeurgegevens uit sessie
 $instructeur_naam = $_SESSION['naam'] ?? 'Instructeur';
