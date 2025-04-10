@@ -6,36 +6,35 @@
     <title>Document</title>
 </head>
 <body>
-    
 
 <?php
 session_start();
-include_once('instructeur.php');
-include_once 'db.php';
 
+include_once 'instructeur.php';
+include_once '../db.php';
 
-
-// if (isset($_GET["les_id"])) {
-    // $les_id = $_GET["les_id"];
-    
-// }
-
+// Controleer of de gebruiker ingelogd is als instructeur
 if (!isset($_SESSION['gebruiker_id']) || $_SESSION['rol'] !== 'instructeur') {
-        header("Location: intructeurmededelingen.php");
-        exit;
+    header("Location: instructeurmededelingen.php");
+    exit;
 }
 
+// Instantieer het Instructeur object
+$instructeur = new Instructeur($dbh);
 
-$instructeur = new $Instructeur($dbh);
+// Haal alle mededelingen op
 $mededelingen = $instructeur->haalAlleMededelingenOp();
 ?>
-<h2> mededelingen van andere leerlingen</2>
+
+<h2>Mededelingen van andere leerlingen</h2>  <!-- Correcte sluiting van <h2> -->
+
 <?php
+// Loop door de mededelingen en toon ze
 foreach ($mededelingen as $mededeling): ?>
-<div style="border:1px solid #ccc; padding:10px; mrgin-bottom:10px;">
-    <strong><?= htmlspeacialchars($mededeling['naam'])?></strong> schreef op <?= $mededeling['datum']?>
+<div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <strong><?= htmlspecialchars($mededeling['naam']) ?></strong> schreef op <?= $mededeling['datum'] ?>
 </div>
-<?php endforeach?>
+<?php endforeach ?>
 
 </body>
 </html>

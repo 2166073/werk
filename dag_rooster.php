@@ -1,20 +1,17 @@
 <?php
-include 'db.php';
+include '../db.php';
 $db = new DB();
 
-// Controleer of de gebruiker ingelogd is en een instructeur is
 session_start();
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'instructeur') {
     header('Location: login.php');
     exit;
 }
 
-// Haal de huidige datum op in het juiste formaat (YYYY-MM-DD)
 $huidige_datum = date("Y-m-d");
 
-// Haal de lessen van de instructeur op voor de huidige dag
 $lessen = $db->execute("
-    SELECT l.les_id, l.datum, l.ophaallocatie, l.pakket,
+    SELECT l.les_id, l.datum, l.starttijd, l.eindtijd, l.ophaallocatie, l.pakket,
            l.leerling_opmerking, l.instructeur_opmerking,
            CONCAT(le.naam, ' ', le.achternaam) AS leerling_naam
     FROM les l
@@ -31,7 +28,7 @@ $lessen = $db->execute("
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dag Rooster</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="instructeur-dashboard.css">
+    <link rel="stylesheet" href="../css/instructeur-dashboard.css">
 </head>
 <body>
 
@@ -41,10 +38,11 @@ $lessen = $db->execute("
         <nav>
             <ul>
                 <li><a href="instructeur-dashboard.php">Home</a></li>
-                <li><a href="#">Week rooster</a></li>
+                <li><a href="week_rooster.php">Week rooster</a></li>
                 <li><a href="dag_rooster.php">Dag rooster</a></li>
                 <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
+                <li><a href="mankement_melden.php">Mankement melden</a></li>
+                <li><a href="kilometerstand_invoeren.php">Kilometerstand invoeren</a></li>
                 <li><a href="view_mededeling.php">Mededeling</a></li>
                 <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
                 <li><a href="logout.php">Uitloggen</a></li>
@@ -60,28 +58,35 @@ $lessen = $db->execute("
                     <thead>
                         <tr>
                             <th>Datum</th>
+                            <th>Starttijd</th>
+                            <th>Eindtijd</th>
                             <th>Ophaallocatie</th>
                             <th>Pakket</th>
                             <th>Leerling</th>
                             <th>Leerling Opmerking</th>
                             <th>Instructeur Opmerking</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($lessen as $les): ?>
                             <tr>
                                 <td><?= htmlspecialchars($les['datum']) ?></td>
+                                <td><?= htmlspecialchars($les['starttijd']) ?></td>
+                                <td><?= htmlspecialchars($les['eindtijd']) ?></td>
                                 <td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
                                 <td><?= htmlspecialchars($les['pakket']) ?></td>
                                 <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
                                 <td><?= htmlspecialchars($les['leerling_opmerking']) ?></td>
                                 <td><?= htmlspecialchars($les['instructeur_opmerking']) ?></td>
+                                <td>
+                                    <a href="les_bewerken.php?les_id=<?= $les['les_id'] ?>" class="btn btn-warning btn-sm">Bewerken</a>
+                                    <a href="les_verwijderen.php?les_id=<?= $les['les_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Weet je zeker dat je deze les wilt verwijderen?')">Verwijderen</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" onclick="window.print()">Print Reservering</button>
- 
             <?php else: ?>
                 <p>Er zijn geen lessen voor vandaag.</p>
             <?php endif; ?>

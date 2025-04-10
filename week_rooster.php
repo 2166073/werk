@@ -1,92 +1,140 @@
 <?php
-include 'db.php';
+
+include '../db.php';
+
 $db = new DB();
-
-// Controleer of de gebruiker ingelogd is en een instructeur is
+ 
 session_start();
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'instructeur') {
+
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'leerling') {
+
     header('Location: login.php');
+
     exit;
+
 }
+ 
+$gebruiker_id = $_SESSION['gebruiker_id'] ?? null;
+ 
+$leerling = $db->execute(
 
-// Haal de huidige week op (maandag t/m zondag)
-$start_van_week = date("Y-m-d", strtotime('monday this week'));
-$einde_van_week = date("Y-m-d", strtotime('sunday this week'));
+    "SELECT leerling_id FROM leerling WHERE gebruiker_id = ?",
 
-// Haal de lessen van de instructeur op voor de huidige week
+    [$gebruiker_id]
+
+)->fetch(PDO::FETCH_ASSOC);
+ 
+if (!$leerling) {
+
+    die("Leerling niet gevonden.");
+
+}
+ 
+$leerling_id = $leerling['leerling_id'];
+
+$vandaag = date("Y-m-d");
+ 
+// DEBUG: Toon alles voor controle
+
+// $debugData = $db->execute("SELECT * FROM les WHERE leerling_id = ?", [$leerling_id])->fetchAll(PDO::FETCH_ASSOC);
+
+// echo "<pre>"; print_r($debugData); echo "</pre>";
+ 
 $lessen = $db->execute("
-    SELECT l.les_id, l.datum, l.ophaallocatie, l.pakket, 
-           CONCAT(le.naam, ' ', le.achternaam) AS leerling_naam
-    FROM les l
-    JOIN leerling le ON l.leerling_id = le.leerling_id
-    WHERE DATE(l.datum) BETWEEN ? AND ? AND l.instructeur_id = ?
-    ORDER BY l.datum ASC
-", [$start_van_week, $einde_van_week, $_SESSION['rol_id']])->fetchAll(PDO::FETCH_ASSOC);
-?>
 
+    SELECT l.les_id, l.datum, l.starttijd, l.eindtijd, l.ophaallocatie,
+
+           l.leerling_opmerking, l.instructeur_opmerking, l.pakket_id,
+
+           CONCAT(a.merk, ' ', a.model, ' - ', a.kenteken) AS auto,
+
+           i.naam AS instructeur_naam
+
+    FROM les l
+
+    JOIN instructeur i ON l.instructeur_id = i.instructeur_id
+
+    JOIN auto a ON l.auto_id = a.auto_id
+
+    WHERE DATE(l.datum) = ? AND l.leerling_id = ?
+
+    ORDER BY l.starttijd ASC
+
+", [$vandaag, $leerling_id])->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+ 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week Rooster</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="instructeur-dashboard.css">
+<meta charset="UTF-8">
+<title>Lesrooster Vandaag</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/leerling-dashboard.css">
 </head>
 <body>
-
+ 
 <div class="dashboard-container">
-    <aside class="sidebar">
-        <h2>DriveSmart</h2>
-        <nav>
-            <ul>
-                <li><a href="instructeur-dashboard.php">Home</a></li>
-                <li><a href="week_rooster.php">Week rooster</a></li>
-                <li><a href="dag_rooster.php">Dag rooster</a></li>
-                <li><a href="les_aanmaken.php">Les aanmaken</a></li>
-                <li><a href="lessen_bekijken.php">Les bewerken</a></li>
-                <li><a href="view_mededeling.php">Mededeling</a></li>
-                <li><a href="instructeur_ziekmelden.php">Ziekmelden</a></li>
-                <li><a href="logout.php">Uitloggen</a></li>
-            </ul>
-        </nav>
-    </aside>
-
+<aside class="sidebar">
+<h2>DriveSmart</h2>
+<nav>
+<ul>
+<li><a href="leerling-dashboard.php">Home</a></li>
+<li><a href="leerling_viewles.php">Les rooster</a></li>
+<li><a href="leerling-lesinplannen.php">Les inplannen</a></li>
+<li><a href="leerling-profiel.php">Profiel</a></li>
+<li><a href="view_mededelingenleerling.php">Mededeling</a></li>
+<li><a href="logout.php">Afmelden</a></li>
+</ul>
+</nav>
+</aside>
+ 
     <main class="main-content">
-        <div class="container mt-5">
-            <h2>Rooster voor deze week (<?= date("d-m-Y", strtotime($start_van_week)) ?> tot <?= date("d-m-Y", strtotime($einde_van_week)) ?>)</h2>
-
-            <?php if (count($lessen) > 0): ?>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Tijd</th>
-                            <th>Ophaallocatie</th>
-                            <th>Pakket</th>
-                            <th>Leerling</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($lessen as $les): ?>
-                            <tr>
-                                <td><?= htmlspecialchars(date('d-m-Y', strtotime($les['datum']))) ?></td>
-                                <td><?= htmlspecialchars(date('H:i', strtotime($les['datum']))) ?></td>
-                                <td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
-                                <td><?= htmlspecialchars($les['pakket']) ?></td>
-                                <td><?= htmlspecialchars($les['leerling_naam']) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>Er zijn geen lessen ingepland voor deze week.</p>
-            <?php endif; ?>
-
-            <a href="instructeur-dashboard.php" class="btn btn-secondary mt-4">Terug naar Dashboard</a>
-        </div>
-    </main>
+<div class="container mt-5">
+<h2>Mijn lessen van vandaag (<?= date("d-m-Y") ?>)</h2>
+ 
+            <?php if (!empty($lessen)): ?>
+<table class="table table-bordered">
+<thead class="table-dark">
+<tr>
+<th>Tijd</th>
+<th>Ophaallocatie</th>
+<th>Auto</th>
+<th>Instructeur</th>
+<th>Pakket ID</th>
+<th>Mijn Opmerking</th>
+<th>Opmerking Instructeur</th>
+<th>Actie</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($lessen as $les): ?>
+<tr>
+<td><?= htmlspecialchars($les['starttijd']) ?> - <?= htmlspecialchars($les['eindtijd']) ?></td>
+<td><?= htmlspecialchars($les['ophaallocatie']) ?></td>
+<td><?= htmlspecialchars($les['auto']) ?></td>
+<td><?= htmlspecialchars($les['instructeur_naam']) ?></td>
+<td><?= htmlspecialchars($les['pakket_id']) ?></td>
+<td><?= !empty($les['leerling_opmerking']) ? nl2br(htmlspecialchars($les['leerling_opmerking'])) : '<i>Geen</i>' ?></td>
+<td><?= !empty($les['instructeur_opmerking']) ? nl2br(htmlspecialchars($les['instructeur_opmerking'])) : '<i>Geen</i>' ?></td>
+<td>
+<a href="leerling-opmerking.php?les_id=<?= $les['les_id'] ?>" class="btn btn-sm btn-warning mb-1">Bewerken</a>
+<a href="verwijder_les.php?les_id=<?= $les['les_id'] ?>" class="btn btn-sm btn-danger">Verwijderen</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+ 
+                <button class="btn btn-primary" onclick="window.print()">Print Dagrooster</button>
+<?php else: ?>
+<div class="alert alert-info">Je hebt vandaag geen lessen ingepland.</div>
+<?php endif; ?>
 </div>
-
+</main>
+</div>
+ 
 </body>
 </html>
+
+ 
